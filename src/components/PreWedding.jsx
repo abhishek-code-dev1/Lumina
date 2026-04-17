@@ -275,6 +275,7 @@ const PreWedding = () => {
                 alt={photo.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-active:scale-105"
                 loading="lazy"
+                decoding="async"
               />
               {/* always-on gradient label */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent flex flex-col justify-end p-3">
@@ -395,6 +396,7 @@ const BentoCard = ({ photo, idx, onOpen, style }) => (
       alt={photo.title}
       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
       loading="lazy"
+      decoding="async"
     />
     {/* dark vignette always */}
     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />

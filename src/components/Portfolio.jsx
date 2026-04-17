@@ -195,6 +195,7 @@ const Portfolio = () => {
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-active:scale-105"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-3">
                   <span className="text-gold-400 text-[8px] tracking-[0.18em] uppercase mb-0.5">
@@ -240,6 +241,7 @@ const Portfolio = () => {
                       alt={item.title}
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                       loading="lazy"
+                      decoding="async"
                     />
                     {/* permanent vignette */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
@@ -288,6 +290,7 @@ const Portfolio = () => {
                         alt={item.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent flex flex-col justify-end p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span className="text-gold-400 text-[9px] tracking-widest uppercase mb-1">

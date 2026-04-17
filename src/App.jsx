@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="bg-dark-900 min-h-screen">
       <Navbar />
-      <main className="pb-20 md:pb-0"> {/* padding bottom for mobile nav (h-16 + safe-area) */}
+      <main className="pb-14 md:pb-0"> {/* padding bottom for compact 52px mobile nav */}
         <Hero />
         <Portfolio />
         <PreWedding />

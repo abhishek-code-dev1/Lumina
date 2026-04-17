@@ -13,24 +13,19 @@ const navItems = [
 const MobileBottomNav = () => {
   const [active, setActive] = useState('home');
 
-  // Update active section on scroll via IntersectionObserver
   useEffect(() => {
     const sectionIds = navItems.map((n) => n.to);
     const observers = [];
-
     sectionIds.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActive(id);
-        },
-        { threshold: 0.35 }
+        ([entry]) => { if (entry.isIntersecting) setActive(id); },
+        { threshold: 0.3, rootMargin: '-10% 0px -60% 0px' }
       );
       obs.observe(el);
       observers.push(obs);
     });
-
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
@@ -38,14 +33,17 @@ const MobileBottomNav = () => {
     <nav
       className="md:hidden fixed bottom-0 left-0 right-0 z-50"
       style={{
-        background: 'rgba(10,10,10,0.97)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        borderTop: '1px solid rgba(255,255,255,0.08)',
+        background: 'rgba(8,8,8,0.98)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderTop: '1px solid rgba(255,255,255,0.07)',
+        /* safe area for iPhone home indicator */
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+        boxShadow: '0 -4px 20px rgba(0,0,0,0.4)',
       }}
     >
-      <div className="flex items-stretch w-full h-16">
+      {/* Compact h-14 = 56px — same as Flipkart/Amazon bottom tab */}
+      <div className="flex items-stretch w-full" style={{ height: '52px' }}>
         {navItems.map(({ to, icon: Icon, label }) => {
           const isActive = active === to;
           return (
@@ -53,48 +51,51 @@ const MobileBottomNav = () => {
               key={to}
               to={to}
               smooth={true}
-              duration={500}
-              offset={-60}
+              duration={450}
+              offset={-56}
               spy={true}
               onSetActive={() => setActive(to)}
               onClick={() => setActive(to)}
-              className="flex flex-col items-center justify-center flex-1 cursor-pointer group relative select-none"
-              style={{ WebkitTapHighlightColor: 'transparent' }}
+              className="flex flex-col items-center justify-center flex-1 cursor-pointer relative select-none"
+              style={{ WebkitTapHighlightColor: 'transparent', minWidth: 0 }}
             >
-              {/* Active indicator pill */}
-              <span
-                className="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 rounded-b-full transition-all duration-300"
-                style={{
-                  width: isActive ? '32px' : '0px',
-                  background: 'linear-gradient(90deg, #B08D5B, #D4A96A)',
-                  opacity: isActive ? 1 : 0,
-                }}
-              />
+              {/* Active top pill */}
+              {isActive && (
+                <span
+                  className="absolute top-0 left-1/2 -translate-x-1/2 h-[2px] rounded-b-full"
+                  style={{
+                    width: '28px',
+                    background: 'linear-gradient(90deg,#B08D5B,#D4A96A)',
+                  }}
+                />
+              )}
 
-              {/* Icon container */}
+              {/* Icon — 18px like Flipkart */}
               <span
-                className="flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300"
+                className="flex items-center justify-center rounded-full transition-all duration-200"
                 style={{
-                  background: isActive ? 'rgba(176,141,91,0.15)' : 'transparent',
-                  transform: isActive ? 'translateY(-1px)' : 'none',
+                  width: '32px',
+                  height: '28px',
+                  background: isActive ? 'rgba(176,141,91,0.13)' : 'transparent',
+                  marginBottom: '2px',
                 }}
               >
                 <Icon
-                  size={20}
-                  strokeWidth={isActive ? 2 : 1.5}
-                  style={{
-                    color: isActive ? '#D4A96A' : '#9CA3AF',
-                    transition: 'color 0.25s, stroke-width 0.25s',
-                  }}
+                  size={18}
+                  strokeWidth={isActive ? 2.2 : 1.6}
+                  style={{ color: isActive ? '#D4A96A' : '#9CA3AF' }}
                 />
               </span>
 
-              {/* Label */}
+              {/* Label — 8px ultra-compact */}
               <span
-                className="text-[9px] uppercase tracking-widest leading-none transition-colors duration-250 mt-0.5"
                 style={{
+                  fontSize: '8px',
+                  lineHeight: 1,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
                   color: isActive ? '#D4A96A' : '#6B7280',
-                  fontWeight: isActive ? '600' : '400',
+                  fontWeight: isActive ? 600 : 400,
                 }}
               >
                 {label}

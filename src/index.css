@@ -51,3 +51,31 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #B08D5B; 
 }
+
+/* ── Smooth scroll ───────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── GPU-accelerated image hover animations ─── */
+/* Promotes image containers to own compositor layer */
+.group img,
+.group > img {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ── Prevent layout shift on lazy images ─────── */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── Reduces animation jank on low-power devices  */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
