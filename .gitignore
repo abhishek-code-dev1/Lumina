@@ -82,13 +82,14 @@ coverage/
 .parcel-cache/
 .turbo/
 
-# ── Large Local Image Assets ──────────────────
-# These are downloaded locally via downloadImages.mjs
-# Add to GitHub Releases or a CDN instead of committing
-# Comment these lines out if you WANT to push images to GitHub
-iiim/
+# ── Large Local Image Assets ──────────────────────────────
+# Images in iiim/ ARE committed to GitHub so Render can build them.
+# The vite.config.js plugin copies them to dist/iiim/ at build time.
+# (Uncomment below ONLY if switching to a CDN like Cloudinary)
+# iiim/
 
-# ── Utility Scripts (optional — keep if needed) ──
-# Uncomment below to exclude the download/copy helper scripts:
+# ── Utility Scripts ───────────────────────────────────────
+# One-time helper scripts, not needed in production
+move-images.mjs
 # downloadImages.mjs
 # copyImages.mjs
