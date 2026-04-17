@@ -1,0 +1,94 @@
+# ─────────────────────────────────────────────
+#  LUMINA STUDIO — .gitignore
+#  React + Vite + Tailwind CSS Project
+# ─────────────────────────────────────────────
+
+# ── Dependencies ──────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# ── Build Output ──────────────────────────────
+dist/
+dist-ssr/
+build/
+out/
+
+# ── Vite Cache ────────────────────────────────
+.vite/
+vite.config.js.timestamp-*
+
+# ── Environment Variables ─────────────────────
+# Never commit secrets/API keys to GitHub
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# ── Logs ──────────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# ── OS Generated Files ────────────────────────
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ── IDE & Editor Files ────────────────────────
+# VS Code
+.vscode/
+!.vscode/extensions.json
+
+# JetBrains (WebStorm, IntelliJ)
+.idea/
+*.iml
+*.iws
+
+# Vim / Emacs
+*.swp
+*.swo
+.#*
+
+# ── Testing ───────────────────────────────────
+coverage/
+.nyc_output/
+
+# ── Misc ──────────────────────────────────────
+*.local
+.cache/
+.parcel-cache/
+.turbo/
+
+# ── Large Local Image Assets ──────────────────
+# These are downloaded locally via downloadImages.mjs
+# Add to GitHub Releases or a CDN instead of committing
+# Comment these lines out if you WANT to push images to GitHub
+iiim/
+
+# ── Utility Scripts (optional — keep if needed) ──
+# Uncomment below to exclude the download/copy helper scripts:
+# downloadImages.mjs
+# copyImages.mjs
