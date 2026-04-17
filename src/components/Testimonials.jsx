@@ -33,9 +33,9 @@ const Testimonials = () => {
   const prev = () => setCurrent((c) => (c === 0 ? testimonials.length - 1 : c - 1));
 
   return (
-    <section className="py-24 bg-dark-800 relative overflow-hidden flex items-center justify-center min-h-[600px]">
-      {/* Background blur effect */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <section className="py-16 md:py-24 bg-dark-800 relative overflow-hidden flex items-center justify-center min-h-[500px] md:min-h-[600px]">
+      {/* Background glow — hidden on mobile via CSS for perf */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold-900/10 rounded-full blur-[120px] pointer-events-none hidden md:block" />
 
       <div className="container mx-auto px-4 max-w-5xl relative z-10 text-center">
         <Quote size={48} className="text-gold-500/40 mx-auto mb-8" />
@@ -54,10 +54,12 @@ const Testimonials = () => {
                 "{testimonials[current].text}"
               </p>
               <div className="flex flex-col items-center">
-                <img 
-                  src={testimonials[current].image} 
-                  alt={testimonials[current].name} 
-                  className="w-16 h-16 rounded-full object-cover object-top mb-4 border border-gold-500/30"
+                <img
+                  src={testimonials[current].image}
+                  alt={testimonials[current].name}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover object-top mb-4 border border-gold-500/30"
                 />
                 <h4 className="text-white uppercase tracking-widest text-sm font-semibold">{testimonials[current].name}</h4>
                 <span className="text-gold-500 text-xs font-light tracking-wide">{testimonials[current].date}</span>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Camera, Video, BookHeart, Aperture } from 'lucide-react';
+import LazyImage from './LazyImage';
 
 const services = [
   {
@@ -53,12 +54,11 @@ const Services = () => {
             <div key={service.id} className="snap-center shrink-0 w-[60vw] md:w-auto group relative overflow-hidden bg-dark-900 border border-white/5 rounded-sm">
               <div className="h-36 md:h-64 overflow-hidden relative">
                 <div className="absolute inset-0 bg-dark-900/40 z-10"></div>
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  loading="lazy"
-                  decoding="async"
+                <LazyImage
+                  src={service.image}
+                  alt={service.title}
                   className="w-full h-full object-cover"
+                  wrapperClassName="w-full h-full"
                 />
               </div>
               <div className="p-4 md:p-8 relative z-20 bg-dark-900">

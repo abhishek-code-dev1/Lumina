@@ -179,10 +179,10 @@ const PreWedding = () => {
 
   return (
     <section id="prewedding" className="relative py-16 md:py-28 bg-dark-900 overflow-hidden">
-      {/* ── subtle decorative bg ── */}
+      {/* decorative bg — desktop only */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        className="pointer-events-none absolute inset-0 opacity-[0.03] hidden md:block"
         style={{
           backgroundImage:
             'radial-gradient(circle at 20% 50%, #B08D5B 0%, transparent 60%), radial-gradient(circle at 80% 20%, #B08D5B 0%, transparent 50%)',

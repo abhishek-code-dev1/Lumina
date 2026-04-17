@@ -69,8 +69,8 @@ const addOns = [
 const Pricing = () => {
   return (
     <section id="pricing" className="py-12 md:py-24 bg-dark-900 border-t border-white/5 relative">
-      {/* Subtle radial glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-gold-900/10 rounded-full blur-[140px] pointer-events-none" />
+      {/* Subtle radial glow — desktop only for performance */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-gold-900/10 rounded-full blur-[140px] pointer-events-none hidden md:block" />
 
       <div className="container mx-auto max-w-7xl px-0 md:px-4 relative z-10">
         <div className="text-center mb-8 md:mb-16">

@@ -3,12 +3,38 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent; /* Remove grey tap flash on mobile */
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-dark-900 text-white font-sans overflow-x-hidden;
+    /* Native smooth momentum scroll on iOS */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif font-normal tracking-wide;
+  }
+
+  /* ── Prevent CLS — block display for all images */
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* ── Image skeleton shimmer animation ── */
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position:  200% 0; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 }
 
@@ -16,15 +42,15 @@
   .btn-primary {
     @apply px-8 py-3 bg-gold-500 hover:bg-gold-400 text-dark-900 font-medium transition-all duration-300 rounded-sm uppercase tracking-widest text-sm relative overflow-hidden;
   }
-  
+
   .btn-outline {
     @apply px-8 py-3 border border-gold-500 text-gold-500 hover:bg-gold-500/10 transition-all duration-300 rounded-sm uppercase tracking-widest text-sm;
   }
-  
+
   .glass-panel {
     @apply bg-white/5 backdrop-blur-md border border-white/10;
   }
-  
+
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -32,50 +58,80 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-}
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0A0A0A; 
-}
-
-::-webkit-scrollbar-thumb {
-  background: #333; 
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #B08D5B; 
-}
-
-/* ── Smooth scroll ───────────────────────────── */
-html {
-  scroll-behavior: smooth;
-}
-
-/* ── GPU-accelerated image hover animations ─── */
-/* Promotes image containers to own compositor layer */
-.group img,
-.group > img {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* ── Prevent layout shift on lazy images ─────── */
-img {
-  display: block;
-  max-width: 100%;
-}
-
-/* ── Reduces animation jank on low-power devices  */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+  /* ── GPU-composited image zoom containers ── */
+  /* Image scale-on-hover is composited on GPU — no layout recalc */
+  .img-zoom {
+    overflow: hidden;
+    transform: translateZ(0); /* Create stacking context */
+  }
+  .img-zoom img {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .img-zoom:hover img,
+  .group:hover .img-zoom img {
+    transform: scale(1.08) translateZ(0);
   }
 }
+
+/* ─── Custom Scrollbar (desktop only) ──────── */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0A0A0A; }
+  ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #B08D5B; }
+}
+
+/* ─── Content Visibility — paint off-screen sections lazily ── */
+/* Browser skips rendering cost for below-fold sections entirely */
+#portfolio, #prewedding, #services, #about, #pricing, #contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px; /* Estimated height placeholder */
+}
+
+/* ─── Disable heavy animations on mobile for perf ─── */
+@media (max-width: 767px) {
+  /* Ken-burns on hero is GPU-expensive on mobile — disable */
+  .animate-ken-burns {
+    animation: none !important;
+    transform: scale(1) !important;
+  }
+
+  /* Heavy blurs are expensive on mobile GPU — remove decorative ones */
+  .blur-\[120px\],
+  .blur-\[140px\],
+  .blur-\[100px\] {
+    display: none;
+  }
+
+  /* Limit Framer Motion transitions on mobile for snappiness */
+  [data-framer-component-type] * {
+    transition-duration: 0.2s !important;
+  }
+}
+
+/* ─── Reduce motion for accessibility & low-end devices ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Touch action: pan-y for vertical scroll zones ──────── */
+/* Tells browser: treat this as vertical scroll — no delay */
+.snap-x {
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─── Aspect-ratio placeholders to prevent layout shift ─── */
+.aspect-photo    { aspect-ratio: 3 / 4; }
+.aspect-wide     { aspect-ratio: 16 / 9; }
+.aspect-square   { aspect-ratio: 1 / 1; }
+.aspect-portrait { aspect-ratio: 2 / 3; }

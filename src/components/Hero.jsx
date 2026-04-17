@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
+import LazyImage from './LazyImage';
 
 const HERO_IMG = '/iiim/pexels-fotographiya-wedding-photography-823737813-30215313.jpg';
 
@@ -8,15 +9,14 @@ const Hero = () => {
   return (
     <section id="home" className="relative h-[60vh] md:h-screen flex items-center justify-center overflow-hidden">
 
-      {/* ── Background: <img> for LCP perf, shown as cover ── */}
+      {/* Background — eager LazyImage for best LCP */}
       <div className="absolute inset-0 z-0">
-        <img
+        <LazyImage
           src={HERO_IMG}
-          alt="Lumina wedding photography hero"
-          fetchpriority="high"
-          decoding="sync"
-          loading="eager"
-          className="absolute inset-0 w-full h-full object-cover md:animate-ken-burns scale-110"
+          alt="Lumina wedding photography"
+          eager={true}
+          className="absolute inset-0 w-full h-full object-cover md:animate-ken-burns"
+          wrapperClassName="absolute inset-0 w-full h-full"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-dark-900/60 via-dark-900/40 to-dark-900/90 z-10" />
       </div>
